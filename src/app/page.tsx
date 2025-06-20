@@ -1,21 +1,25 @@
 'use client';
-
-import React from 'react';
-import { Button as ShadcnButton } from '../components/ui/button';
+import { useRemoteComponent } from '@/hooks/useRemoteComponent';
+import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 
 export default function Home() {
-  const DynamicButton = useRemoteComponent('StyledShadcnButton', { Button: ShadcnButton });
-  
-  return (
-    <div className="p-8 space-y-4">
-      <h1 className="text-xl font-bold">Bouton distant</h1>
+  const DynamicModeToggle = useRemoteComponent('ModeToggle', {
+    Button,
+    Sun,
+    Moon,
+    useTheme
+  });
 
-      {DynamicButton ? (
-        <DynamicButton onClick={() => alert('Clique détecté !')}>
-          <span className="font-semibold">Clique-moi</span>
-        </DynamicButton>
+  return (
+    <div className="p-8">
+      <h1 className="text-xl font-bold mb-4">Theme Toggle</h1>
+      
+      {DynamicModeToggle ? (
+        <DynamicModeToggle />
       ) : (
-        <p>Chargement du composant...</p>
+        <p>Loading theme toggle...</p>
       )}
     </div>
   );
